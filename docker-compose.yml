@@ -11,4 +11,4 @@ services:
     stdin_open: true
     tty: true
     volumes:
-     - '.:/home/developer'
+     - './:/home/developer/code'
