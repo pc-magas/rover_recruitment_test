@@ -49,15 +49,34 @@ class RoverTest extends TestCase
     }
 
     /**
+     * @param Int $x The initial x coordinate of the rover
+     * @param Int $y The initial y coordinate of he rover
+     * @param String $orientation The initial rover orientation
+     * @param String $rotationCommand The command for the rover to rotate
+     */
+    private function rotationTest($x, $y, $orientation, $rotationCommand)
+    {
+        $expectedResult = Constants::ROTATIONS[$rotationCommand][$orientation];
+        $rover = new Rover($x,$y,$orientation);
+        $rover->processCommand($rotationCommand);
+  
+        $this->assertSame($rover->getOrientation(),$expectedResult);
+    }
+
+    /**
      * @dataProvider roverProvider
      */
     public function testRotationLeft($x,$y,$orientation)
     {
-      $expectedResult = Constants::ROTATIONS[Constants::COMMAND_ROT_LEFT][$orientation];
-      $rover = new Rover($x,$y,$orientation);
-      $rover->processCommand(Constants::COMMAND_ROT_LEFT);
+      $this->rotationTest($x,$y,$orientation,Constants::COMMAND_ROT_LEFT);
+    }
 
-      $this->assertSame($rover->getOrientation(),$expectedResult);
+    /**
+     * @dataProvider roverProvider
+     */
+    public function testRotationRight($x,$y,$orientation)
+    {
+        $this->rotationTest($x,$y,$orientation,Constants::COMMAND_ROT_RIGHT);
     }
 
     public function roverProvider()
