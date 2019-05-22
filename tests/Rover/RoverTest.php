@@ -39,4 +39,27 @@ class RoverTest extends TestCase
         $this->expectException(TooManyCommandsException::class);
         $rover->processCommand(implode('',$commands));
     }
+
+    /**
+     * @dataProvider roverProvider
+     */
+    public function testRotationLeft($x,$y,$orientation)
+    {
+      $expectedResult = Constants::ROTATIONS[Constants::COMMAND_ROT_LEFT][$orientation];
+      echo 'Expecting Result: '.$expectedResult." Provided Orientation $orientation \n";
+      $rover = new Rover($x,$y,$orientation);
+      $rover->processCommand(Constants::COMMAND_ROT_LEFT);
+
+      $this->assertSame($rover->getOrientation(),$expectedResult);
+    }
+
+    public function roverProvider()
+    {
+        return [
+            'orientation North' => [1, 2, Constants::ORIENTATION_NORTH],
+            'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH],
+            'orientation East'  => [1, 2, Constants::ORIENTATION_EAST],
+            'orientation West'  => [1, 2, Constants::ORIENTATION_WEST]
+        ];
+    }
 }

@@ -49,7 +49,7 @@ class Rover
 
     public function getOrientation()
     {
-        return $orientation;
+        return $this->orientation;
     }
 
 
@@ -71,7 +71,8 @@ class Rover
             throw new InvalidCommandException($command);
         }
 
-        if(!isset(Constants::ROTATIONS[$command][$this->orientation])){ //Assuming Move Commanf if not a rotation command
+        if(!isset(Constants::ROTATIONS[$command][$this->orientation])){ 
+           //Assuming Move Commanf if not a rotation command
            $step=Utils::MOVE_STEP[$this->rotation];
            $this->x+=$step[Utils::COORD_X];
            $this->y+=$step[Utils::COORD_Y];
