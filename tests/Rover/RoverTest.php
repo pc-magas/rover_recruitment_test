@@ -79,6 +79,19 @@ class RoverTest extends TestCase
         $this->rotationTest($x,$y,$orientation,Constants::COMMAND_ROT_RIGHT);
     }
 
+    /**
+     * @dataProvider roverMoveProvider
+     */
+    public function testMove($x, $y, $orientation, $expectedX, $expectedY)
+    {
+        $rover = new Rover($x, $y, $orientation);
+        $rover->processCommand(Constants::COMMAND_MOVE);
+        $this->assertSame($rover->getX(),$expectedX,'X coordinates does not match');
+        $this->assertSame($rover->getY(),$expectedY,'Y coordinates does not match');
+        // Orientations must not be changed
+        $this->assertSame($rover->getOrientation(),$orientation,'Orientation is not the same');
+    }
+
     public function roverProvider()
     {
         return [
@@ -86,6 +99,16 @@ class RoverTest extends TestCase
             'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH],
             'orientation East'  => [1, 2, Constants::ORIENTATION_EAST],
             'orientation West'  => [1, 2, Constants::ORIENTATION_WEST]
+        ];
+    }
+
+    public function roverMoveProvider()
+    {
+        return [
+            'orientation North' => [1, 2, Constants::ORIENTATION_NORTH, 1, 3],
+            'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH, 1, 1],
+            'orientation East'  => [1, 2, Constants::ORIENTATION_EAST , 0, 2],
+            'orientation West'  => [1, 2, Constants::ORIENTATION_WEST , 2, 2]
         ];
     }
 }

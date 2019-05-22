@@ -73,9 +73,9 @@ class Rover
 
         if(!isset(Constants::ROTATIONS[$command][$this->orientation])){ 
            //Assuming Move Commanf if not a rotation command
-           $step=Utils::MOVE_STEP[$this->rotation];
-           $this->x+=$step[Utils::COORD_X];
-           $this->y+=$step[Utils::COORD_Y];
+           $step=Constants::MOVE_STEP[$this->orientation];
+           $this->x+=$step[Constants::COORD_X];
+           $this->y+=$step[Constants::COORD_Y];
         } else {
             $this->orientation=Constants::ROTATIONS[$command][$this->orientation];
         }
