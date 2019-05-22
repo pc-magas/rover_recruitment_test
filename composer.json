@@ -1,5 +1,9 @@
 {
-    
+    "autoload": {
+        "psr-4":{
+            "Rover\\": "src/Rover"
+        }
+    },
     "require-dev": {
         "phpunit/phpunit": "^8.1"
     }
