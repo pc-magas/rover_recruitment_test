@@ -2,6 +2,10 @@
 
 namespace Rover;
 
+use Rover\Utils;
+use Rover\Exceptions\InvalidCommandException;
+use Rover\Exceptions\TooManyCommandsException;
+
 class Rover
 {
 
@@ -47,8 +51,18 @@ class Rover
         return $orientation;
     }
 
+
     public function rotate(string $command)
     {
+        //Process one command only
+        if(strlet($command)>1){
+            throw new TooManyCommandsException();
+        }
 
+        if(!Utils::verifyCommand($command)){
+            throw new InvalidCommandException($command);
+        }
+
+        $this->orientation=
     }
 }
