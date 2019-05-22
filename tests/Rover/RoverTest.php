@@ -20,7 +20,7 @@ class RoverTest extends TestCase
         $rover->processCommand($command);
     }
 
-    public function testInvalidMultiCommand()
+    public function testInvalidMultiCommandExceptionThrow()
     {
         $command="HRMHV";
         $rover=new Rover(1,2,Constants::ORIENTATION_NORTH);
@@ -28,7 +28,7 @@ class RoverTest extends TestCase
         $rover->processCommand($command);
     }
 
-    public function testValidMultiCommand()
+    public function testValidMultiCommandExceptionThrow()
     {
         $commands=[Constants::COMMAND_ROT_LEFT,
             Constants::COMMAND_MOVE,
