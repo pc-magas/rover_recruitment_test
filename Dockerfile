@@ -12,9 +12,11 @@ RUN chmod +x ./entrypoint.sh &&
     apk add --no-cache --update bash bash-completion bash-doc &&
     groupadd -r -g ${DOCKER_GID} developer &&
     useradd -r -y ${DOCKER_UID} -g ${DOCKER_GID} -d /home/developer -m -s /bin/bash developer &&
-    chown -r ${DOCKER_UID}:${DOCKER_GID} /home/developer
+    chown -r ${DOCKER_UID}:${DOCKER_GID} /home/developer &&
+    mkdir -p /home/developer/code &&
+    chown -r ${DOCKER_UID}:${DOCKER_GID} /home/developer/code
 
 
-VOLUME /home/developer
+VOLUME /home/developer/code
 
 ENTRYPOINT [/usr/bin/entrypoint.sh]

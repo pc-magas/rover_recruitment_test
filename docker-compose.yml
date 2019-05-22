@@ -1,0 +1,11 @@
+version: '3'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: 'pcmagas/rover_php'
+    stdin_open: true
+    tty: true
+    volumes:
+     - '.:/home/developer'
