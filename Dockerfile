@@ -14,4 +14,4 @@ VOLUME /home/developer/code
 
 USER developer
 
-ENTRYPOINT /usr/bin/bash
+ENTRYPOINT /bin/bash
