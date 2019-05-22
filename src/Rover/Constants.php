@@ -22,7 +22,7 @@ final class Constants
     const COMMAND_MOVE='M';
 
     // Regex used in chgecking whether a command is valid
-    const AVAILABLE_COMMANDS_CONFIRM_REGEX = "/^(self::COMMAND_ROT_LEFT|self::COMMAND_ROT_RIGHT|self::COMMAND_MOVE)*$/";
+    const AVAILABLE_COMMANDS_CONFIRM_REGEX = "/^(".self::COMMAND_ROT_LEFT.'|'.self::COMMAND_ROT_RIGHT.'|'.self::COMMAND_MOVE.")*$/";
    
     //Coordinate Manipulators depending the orientation
     const MOVE_STEP=[

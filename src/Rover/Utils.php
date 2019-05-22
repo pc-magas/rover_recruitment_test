@@ -14,6 +14,6 @@ class Utils
      */
     public static function verifyCommand(string $command)
     {
-        return preg_match(Constants::AVAILABLE_COMMANDS_CONFIRM_REGEX,$command);
+        return preg_match(Constants::AVAILABLE_COMMANDS_CONFIRM_REGEX,$command)!==0;
     }
 }
