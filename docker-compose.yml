@@ -4,6 +4,9 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+      args:
+        USERID: $USERID
+        GROUPID: $GROUPID
     image: 'pcmagas/rover_php'
     stdin_open: true
     tty: true
