@@ -12,6 +12,14 @@ use Rover\Exceptions\TooManyCommandsException;
 
 class RoverTest extends TestCase
 {
+    public function testGetters()
+    {
+        $rover=new Rover(1, 2, Constants::ORIENTATION_WEST);
+        $this->assertSame($rover->getX(),1);
+        $this->assertSame($rover->getY(),2);
+        $this->assertSame($rover->getOrientation(),Constants::ORIENTATION_WEST);
+    }
+
     public function testInvalidCommand()
     {
         $command="H";
@@ -46,7 +54,6 @@ class RoverTest extends TestCase
     public function testRotationLeft($x,$y,$orientation)
     {
       $expectedResult = Constants::ROTATIONS[Constants::COMMAND_ROT_LEFT][$orientation];
-      echo 'Expecting Result: '.$expectedResult." Provided Orientation $orientation \n";
       $rover = new Rover($x,$y,$orientation);
       $rover->processCommand(Constants::COMMAND_ROT_LEFT);
 
