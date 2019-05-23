@@ -9,8 +9,8 @@ class Terain
         if($x<0 || $y <0){
             throw new \InvalidArgumentException('Terrain size cannot be negative');
         }
-        $this->x=x;
-        $this->y=y;
+        $this->x=$x;
+        $this->y=$y;
     }
 
     /**
