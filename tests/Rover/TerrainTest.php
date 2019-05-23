@@ -12,10 +12,25 @@ class TerrainTest extends TestCase
         $terrain= new Terain(-1,-1);
     }
 
-    public function testRoverCoordinatesNegative()
+    private function roverCheckFalseTest($roverX, $roverY)
     {
         $terrain=new Terain(5,5);
-        $result=$terrain->areRoverCoordinatesValid(-1,-1);
+        $result=$terrain->areRoverCoordinatesValid($roverX, $roverY);
         $this->assertFalse($result);
+    }
+
+    public function testRoverCoordinatesNegative()
+    {
+        $this->roverCheckFalseTest(-1,-1);
+    }
+
+    public function testRoverCoordinatesSameTerainSize()
+    {
+        $this->roverCheckFalseTest(5,5);
+    }
+
+    public function testRoverCoordinatesOverTerrainSize()
+    {
+        $this->roverCheckFalseTest(6,6);
     }
 }
