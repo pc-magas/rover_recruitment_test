@@ -33,4 +33,11 @@ class TerrainTest extends TestCase
     {
         $this->roverCheckFalseTest(6,6);
     }
+
+    public function testCorrectRoverPosition()
+    {
+        $terrain=new Terain(5,5);
+        $result=$terrain->areRoverCoordinatesValid(1, 2);
+        $this->assertTrue($result);
+    }
 }
