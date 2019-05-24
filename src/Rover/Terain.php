@@ -18,6 +18,6 @@ class Terain
      */
     public function areRoverCoordinatesValid(int $roverX, int $roverY)
     {
-        return $roverX>0 && $roverY>0 && $roverX < $this->x && $roverY < $this->y;
+        return $roverX >= 0 && $roverY >= 0 && $roverX < $this->x && $roverY < $this->y;
     }
 }

@@ -89,8 +89,15 @@ class Rover
         if(!isset(Constants::ROTATIONS[$command][$this->orientation])){ 
            //Assuming Move Commanf if not a rotation command
            $step=Constants::MOVE_STEP[$this->orientation];
-           $this->x+=$step[Constants::COORD_X];
-           $this->y+=$step[Constants::COORD_Y];
+
+           $newCoordX=$this->x+$step[Constants::COORD_X];
+           $newCoordY=$this->y+$step[Constants::COORD_Y];
+           
+           if($this->terrain->areRoverCoordinatesValid($newCoordX,$newCoordY)){
+            $this->x=$newCoordX;
+            $this->y=$newCoordY;
+           }
+           
         } else {
             $this->orientation=Constants::ROTATIONS[$command][$this->orientation];
         }
