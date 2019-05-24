@@ -7,6 +7,8 @@ use Rover\Exceptions\InvalidCommandException;
 use Rover\Exceptions\TooManyCommandsException;
 use Rover\Exceptions\InvalidRotationCommand;
 
+use Rover\Terain;
+
 class Rover
 {
 
@@ -21,20 +23,33 @@ class Rover
     private $y;
 
     /**
-     * @var String
+     * @var string
      */
     private $orientation;
+
+    /**
+     * @var terrain
+     */
+    private $terrain;
 
     /**
      * @param $x The initial x coordinate of the rover
      * @param $y The initial y coordinate of he rover
      * @param $orientation The initial rover orientation
      */
-    public function __construct(int $x,int $y,string $orientation)
+    public function __construct(int $x,int $y,string $orientation, Terain $t)
     {
+        $this->terrain=$t;
+
+        if(!$this->terrain->areRoverCoordinatesValid($x,$y)) {
+            throw new \InvalidArgumentException("The rover contains invalid coordinates");
+        }
+
         $this->x=$x;
         $this->y=$y;
+        
         $this->orientation=$orientation;
+
     }
 
     public function getX()

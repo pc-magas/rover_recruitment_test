@@ -5,6 +5,7 @@ namespace Tests\Rover;
 use PHPUnit\Framework\TestCase;
 use Rover\Constants;
 use Rover\Rover;
+use Rover\Terain as Terrain;
 
 use Rover\Exceptions\InvalidCommandException;
 use Rover\Exceptions\TooManyCommandsException;
@@ -14,7 +15,7 @@ class RoverTest extends TestCase
 {
     public function testGetters()
     {
-        $rover=new Rover(1, 2, Constants::ORIENTATION_WEST);
+        $rover=new Rover(1, 2, Constants::ORIENTATION_WEST,new Terrain(5,5));
         $this->assertSame($rover->getX(),1);
         $this->assertSame($rover->getY(),2);
         $this->assertSame($rover->getOrientation(),Constants::ORIENTATION_WEST);
@@ -23,7 +24,7 @@ class RoverTest extends TestCase
     public function testInvalidCommand()
     {
         $command="H";
-        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH);
+        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH,new Terrain(5,5));
         $this->expectException(InvalidCommandException::class);
         $rover->processCommand($command);
     }
@@ -31,7 +32,7 @@ class RoverTest extends TestCase
     public function testInvalidMultiCommandExceptionThrow()
     {
         $command="HRMHV";
-        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH);
+        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH,new Terrain(5,5));
         $this->expectException(TooManyCommandsException::class);
         $rover->processCommand($command);
     }
@@ -43,7 +44,7 @@ class RoverTest extends TestCase
             Constants::COMMAND_MOVE,
             Constants::COMMAND_ROT_RIGHT
         ];
-        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH);
+        $rover=new Rover(1,2,Constants::ORIENTATION_NORTH,new Terrain(5,5));
         $this->expectException(TooManyCommandsException::class);
         $rover->processCommand(implode('',$commands));
     }
@@ -57,7 +58,7 @@ class RoverTest extends TestCase
     private function rotationTest($x, $y, $orientation, $rotationCommand)
     {
         $expectedResult = Constants::ROTATIONS[$rotationCommand][$orientation];
-        $rover = new Rover($x,$y,$orientation);
+        $rover = new Rover($x,$y,$orientation,new Terrain(5,5));
         $rover->processCommand($rotationCommand);
   
         $this->assertSame($rover->getOrientation(),$expectedResult);
@@ -82,9 +83,9 @@ class RoverTest extends TestCase
     /**
      * @dataProvider roverMoveProvider
      */
-    public function testMove($x, $y, $orientation, $expectedX, $expectedY)
+    public function testMove($x, $y, $orientation, $expectedX, $expectedY, $terrainWidth, $terrainHeight)
     {
-        $rover = new Rover($x, $y, $orientation);
+        $rover = new Rover($x, $y, $orientation, new Terrain($terrainWidth,$terrainHeight));
         $rover->processCommand(Constants::COMMAND_MOVE);
         $this->assertSame($rover->getX(),$expectedX,'X coordinates does not match');
         $this->assertSame($rover->getY(),$expectedY,'Y coordinates does not match');
@@ -105,10 +106,10 @@ class RoverTest extends TestCase
     public function roverMoveProvider()
     {
         return [
-            'orientation North' => [1, 2, Constants::ORIENTATION_NORTH, 1, 3],
-            'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH, 1, 1],
-            'orientation East'  => [1, 2, Constants::ORIENTATION_EAST , 0, 2],
-            'orientation West'  => [1, 2, Constants::ORIENTATION_WEST , 2, 2]
+            'orientation North' => [1, 2, Constants::ORIENTATION_NORTH, 1, 3, 5, 5],
+            'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH, 1, 1, 5, 5],
+            'orientation East'  => [1, 2, Constants::ORIENTATION_EAST , 0, 2, 5, 5],
+            'orientation West'  => [1, 2, Constants::ORIENTATION_WEST , 2, 2, 5, 5]
         ];
     }
 }
