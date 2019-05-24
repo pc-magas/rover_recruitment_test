@@ -9,6 +9,7 @@ use Rover\Terain as Terrain;
 
 use Rover\Exceptions\InvalidCommandException;
 use Rover\Exceptions\TooManyCommandsException;
+use Rover\Exceptions\RoverOutOfTerrainBoundsException;
 
 
 class RoverTest extends TestCase
@@ -103,6 +104,16 @@ class RoverTest extends TestCase
         $this->assertSame($rover->getOrientation(),$orientation,'Orientation is not the same');
     }
 
+    /**
+     * @dataProvider invalidToMoveRovers
+     */
+    public function invalidMoves($x,$y,$orientation,$terrainWidth, $terrainHeight)
+    {
+        $rover = new Rover($x, $y, $orientation, new Terrain($terrainWidth,$terrainHeight));
+        $this->expectException(RoverOutOfTerrainBoundsException::class);
+        $rover->processCommand(Constants::COMMAND_MOVE);
+    }
+
     // Data Providers
     public function roverProvider()
     {
@@ -136,6 +147,24 @@ class RoverTest extends TestCase
             'Rover ouside of terrain Position Y (2)' => [ 1,  5, 5, 5],
             'Rover ouside of terrain Both (1)'       => [ 6,  6, 5, 5],
             'Rover ouside of terrain Both (5)'       => [ 5,  5, 5, 5],
+        ];
+    }
+
+    public function invalidToMoveRovers()
+    {
+        return [
+            'Cannot Move EAST I' => [0,0,'E',5,5],
+            'Cannot Move EAST II' => [1,0,'E',5,5],
+            'Cannot Move EAST II' => [4,0,'E',5,5],
+            'Cannot Move SOUTH I' => [0,0,'S',5,5],
+            'Cannot Move SOUTH II' => [0,1,'S',5,5],
+            'Cannot Move SOUTH III' => [0,4,'S',5,5],
+            'Cannot Move WEST I' => [0,4,'W',5,5],
+            'Cannot Move WEST ΙI' => [4,4,'W',5,5],
+            'Cannot Move WEST ΙIΙ' => [1,4,'W',5,5],
+            'Cannot Move NORTH Ι' => [4,4,'W',5,5],
+            'Cannot Move NORTH ΙI' => [0,4,'W',5,5],
+            'Cannot Move NORTH ΙII' => [2,4,'W',5,5],
         ];
     }
 }

@@ -72,7 +72,7 @@ class Rover
      * @param $command The rotation command
      * @throws TooManyCommandsException When is provided more than one command
      * @throws InvalidCommandException When the command is not either a move one or a rotate one
-     * @throws InvalidRotationCommand When the command is not a rotation command
+     * @throws RoverOutOfTerrainBoundsException When the rover cannot move
      */
     public function processCommand(string $command)
     {
