@@ -10,3 +10,4 @@ Emulating Commands provided to a Mars Rover as the recruitment states use.
 4. Launch a Bash shell via `docker-compose exec -ti php bash`.
 5. Launch the unit tests via `./vendor/bin/phpunit`.
 
+If classes are not being autoloaded then run first: `composer dump-autoload -o` inside the image's shell.
