@@ -5,7 +5,7 @@ namespace Rover;
 use Rover\Utils;
 use Rover\Exceptions\InvalidCommandException;
 use Rover\Exceptions\TooManyCommandsException;
-use Rover\Exceptions\InvalidRotationCommand;
+use Rover\Exceptions\RoverOutOfTerrainBoundsException;
 
 use Rover\Terain;
 
@@ -92,10 +92,12 @@ class Rover
 
            $newCoordX=$this->x+$step[Constants::COORD_X];
            $newCoordY=$this->y+$step[Constants::COORD_Y];
-           
+
            if($this->terrain->areRoverCoordinatesValid($newCoordX,$newCoordY)){
             $this->x=$newCoordX;
             $this->y=$newCoordY;
+           } else {
+            throw new \RoverOutOfTerrainBoundsException();
            }
            
         } else {
