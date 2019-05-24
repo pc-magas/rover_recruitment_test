@@ -13,7 +13,17 @@ use Rover\Exceptions\TooManyCommandsException;
 
 class RoverTest extends TestCase
 {
-    public function testGetters()
+    /**
+     * @dataProvider misfitRoversInTerrain
+     */
+    public function testTerrainInvalid($roverX, $roverY, $terainX, $terainY)
+    {
+        $terrain= new Terrain($terainX, $terainY);
+        $this->expectException(\InvalidArgumentException::class);
+        $rover=new Rover($roverX, $roverY, 'N', $terrain);
+    }
+
+    public function testGettersValid()
     {
         $rover=new Rover(1, 2, Constants::ORIENTATION_WEST,new Terrain(5,5));
         $this->assertSame($rover->getX(),1);
@@ -93,6 +103,7 @@ class RoverTest extends TestCase
         $this->assertSame($rover->getOrientation(),$orientation,'Orientation is not the same');
     }
 
+    // Data Providers
     public function roverProvider()
     {
         return [
@@ -110,6 +121,21 @@ class RoverTest extends TestCase
             'orientation South' => [1, 2, Constants::ORIENTATION_SOUTH, 1, 1, 5, 5],
             'orientation East'  => [1, 2, Constants::ORIENTATION_EAST , 0, 2, 5, 5],
             'orientation West'  => [1, 2, Constants::ORIENTATION_WEST , 2, 2, 5, 5]
+        ];
+    }
+
+    public function misfitRoversInTerrain()
+    {
+        return [
+            'Rover Negative position X'              => [-1, 2,  5, 5],
+            'Rover Negative position Y'              => [ 2, -1, 5, 5],
+            'Rover Negative position Both'           => [-2, -2, 5, 5],
+            'Rover ouside of terrain Position X (1)' => [ 6,  1, 5, 5],
+            'Rover ouside of terrain Position Y (1)' => [ 1,  6, 5, 5],
+            'Rover ouside of terrain Position X (2)' => [ 5,  1, 5, 5],
+            'Rover ouside of terrain Position Y (2)' => [ 1,  5, 5, 5],
+            'Rover ouside of terrain Both (1)'       => [ 6,  6, 5, 5],
+            'Rover ouside of terrain Both (5)'       => [ 5,  5, 5, 5],
         ];
     }
 }
